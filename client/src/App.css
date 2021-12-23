@@ -1,0 +1,21 @@
+.App {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+.form{
+  max-width: 400px;
+  width: 100%;
+}
+.btnLogin{
+  max-width: 135px;
+  display: block;
+  background: #EFF0F6;
+  line-height: 56px;
+  text-align: center;
+  color: #4E4B66;
+  letter-spacing: 0.75px;
+  font-size: 24px;
+}
