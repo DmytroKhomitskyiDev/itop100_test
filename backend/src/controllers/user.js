@@ -1,10 +1,11 @@
 const db = require("../config/db");
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 class User {
   //get all users.
   async getUsers() {
-    let results = await db.query(`SELECT * FROM user`).catch(console.log);
+    let results = await db.query(`SELECT * FROM users`).catch(console.log);
     return results.rows.some(row => row.id) ? results.rows : [];
   }
 

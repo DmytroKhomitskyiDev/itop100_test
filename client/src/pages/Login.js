@@ -8,9 +8,12 @@ import Row from "antd/es/descriptions/Row";
 // import Header from "../components/Header/Header";
 
 const Login = () => {
-
-    const onFinish = (value) => {
-        loginUserRequest(value)
+    const onFinish = async (value) => {
+        const {data} = await loginUserRequest(value)
+        if(data.success){
+            localStorage.setItem('token', data.token)
+            // Redirect to profile list page
+        }
     }
 
     const onFinishFailed = (error) => {
