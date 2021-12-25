@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const bcrypt = require('bcryptjs')
 
 class User {
   //get all users.
@@ -9,10 +10,21 @@ class User {
 
   //create a user.
   async createUser(user) {
-    await db
-      .query("")
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(user.password, salt)
+    const res = await db
+      .query(`insert into users (userName, email, password, isAdmin) values ($1, $2, $3, $4)`, [user.username, user.email, hashedPassword, user.isAdmin])
       .catch(console.log);
-    return;
+    return res;
+  }
+
+  //login
+  async loginUser(user) {
+    console.log(user)
+    const res = await db
+        .query("")
+        .catch(console.log);
+    return res;
   }
 
   //update a user.

@@ -1,31 +1,34 @@
 import React from "react";
-import 'antd/dist/antd.css';
+import {Button, Checkbox, Col, Form, Input} from "antd";
 import Title from "antd/es/typography/Title";
-import {Button, Checkbox, Form, Input} from "antd";
+import {loginUserRequest} from "../api/api";
+import style from "./style.module.css"
+import {Header} from "antd/es/layout/layout";
+import Row from "antd/es/descriptions/Row";
+// import Header from "../components/Header/Header";
 
-const FormCreate = ({onFinish,onFinishFailed}) => {
+const Login = () => {
+
+    const onFinish = (value) => {
+        loginUserRequest(value)
+    }
+
+    const onFinishFailed = (error) => {
+        console.log('ok' + error)
+    }
 
     return (
         <div className="App">
-            <Title style={{marginBottom:"130px"}}>Create your account</Title>
+            <Title className={style.h1}>Sign in</Title>
             <Form
                 name="basic"
-                className='form'
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
+                className='formAuth'
+                layout="vertical"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
                 <Form.Item
                     label="Email"
                     name="email"
@@ -33,7 +36,6 @@ const FormCreate = ({onFinish,onFinishFailed}) => {
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
                     label="Password"
                     name="password"
@@ -41,19 +43,15 @@ const FormCreate = ({onFinish,onFinishFailed}) => {
                 >
                     <Input.Password />
                 </Form.Item>
-
-                <Form.Item name="isAdmin" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                    <Checkbox>is Admin</Checkbox>
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Form.Item wrapperCol={{ offset: 25 }}>
                     <Button className={'btnLogin'} htmlType="submit">
-                        Sign Up
+                        Sign In
                     </Button>
                 </Form.Item>
+
             </Form>
         </div>
     )
 }
 
-export default FormCreate
+export default Login

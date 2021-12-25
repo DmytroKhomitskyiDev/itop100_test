@@ -1,0 +1,10 @@
+.BtnAuth{
+    max-width: 135px;
+    display: block;
+    background: #EFF0F6;
+    height: 56px;
+    text-align: center;
+    color: #4E4B66;
+    letter-spacing: 0.75px;
+    font-size: 24px;
+}
