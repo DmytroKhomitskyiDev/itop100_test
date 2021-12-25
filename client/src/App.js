@@ -5,18 +5,23 @@ import store from "./redux/store";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistrationUser from "./pages/RegistrationUser";
 import Login from "./pages/Login";
-
+import GlobalStyles from "./styles/globalStyles";
+import Users from "./pages/Users";
 
 function App() {
     return (
-        <Provider store={store}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<RegistrationUser />}/>
-              <Route path="/login" element={<Login />}/>
-            </Routes>
-          </BrowserRouter>
-        </Provider>
+        <div>
+            <GlobalStyles/>
+            <Provider store={store}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<RegistrationUser />}/>
+                  <Route path="/login" element={<Login />}/>
+                  <Route path="/users" element={<Users />}/>
+                </Routes>
+              </BrowserRouter>
+            </Provider>
+        </div>
     )
 }
 

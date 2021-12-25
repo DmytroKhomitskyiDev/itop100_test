@@ -1,11 +1,9 @@
 import React from "react";
-import {Button, Checkbox, Col, Form, Input} from "antd";
+import {Button, Checkbox, Col, Form} from "antd";
+import {SInput} from "../styles/styled";
 import Title from "antd/es/typography/Title";
 import {loginUserRequest} from "../api/api";
 import style from "./style.module.css"
-import {Header} from "antd/es/layout/layout";
-import Row from "antd/es/descriptions/Row";
-// import Header from "../components/Header/Header";
 
 const Login = () => {
     const onFinish = async (value) => {
@@ -22,7 +20,7 @@ const Login = () => {
 
     return (
         <div className="App">
-            <Title className={style.h1}>Sign in</Title>
+            <Title style={style.h1}>Sign in</Title>
             <Form
                 name="basic"
                 className='formAuth'
@@ -37,14 +35,14 @@ const Login = () => {
                     name="email"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
-                    <Input />
+                    <SInput />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <Input.Password />
+                    <SInput.Password />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }}>
                     <Button className={'btnLogin'} htmlType="submit">
