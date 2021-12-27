@@ -10,17 +10,28 @@ export default createGlobalStyle`
       background: #E5E5E5;
     }
   
-  * {
+    * {
     margin: 0;
     padding: 0;
-  }
+    }
   
-  ul {
+    ul {
     margin: 0;
     padding: 0;
-  }
-  
-  p {
+    }
+    
+    p {
       margin: 0;
+    } 
+    
+    .container{
+    max-width: 1560px;
+    margin: 0 auto;
+    }
+    
+    button{
+      background: none;
+      outline: none;
+      border: none;
     }
 `

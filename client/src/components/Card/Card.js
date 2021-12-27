@@ -1,21 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import deleteImg from "../../image/icons/Delete.svg"
 import edit from "../../image/icons/edit.svg"
+import {SCard} from "./style";
 
-const Card = () => {
+const Card = ({name,gender,birthdate,city}) => {
     return (
-        <div className={'card'}>
-            <div className="cardTop">
-                <p className="cardTitle">Danylo Bilyi</p>
-                <p className="cardInfo">male</p>
-                <p className="cardInfo">25.03.2003</p>
-                <p className="cardInfo">Kyiv</p>
-            </div>
-            <div className="cardBottom">
-                <button>edit <img src={edit} alt="edit"/></button>
-                <button>delete <img src={deleteImg} alt="delete"/></button>
-            </div>
-        </div>
+        <>
+            <SCard>
+                <div className="cardTop">
+                    <p className="cardTitle">{name}</p>
+                    <p className="cardInfo">{gender}</p>
+                    <p className="cardInfo">{birthdate}</p>
+                    <p className="cardInfo">{city}</p>
+                </div>
+                <div className="cardBottom">
+                    <button>edit <img src={edit} alt="edit"/></button>
+                    <button>delete <img src={deleteImg} alt="delete"/></button>
+                </div>
+            </SCard>
+        </>
+
     )
 }
 

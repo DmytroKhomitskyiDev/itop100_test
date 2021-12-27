@@ -2,13 +2,15 @@ import styled from "styled-components";
 import colors from "../../styles/colors";
 
 export const SHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
   background: ${colors.BACKGROUND};
   margin-bottom: 60px;
-  padding: 16px 120px;
+  padding: 16px 0;
+  .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   nav,.nav,.logo {
     display: flex;
     align-items: center;
@@ -16,7 +18,7 @@ export const SHeader = styled.header`
   .nav{
     margin-right: 100px;
   }
-  & a{
+  & a, .logout span{
     color: ${colors.TITLE};
     font-size: 18px;
     line-height: 27px;

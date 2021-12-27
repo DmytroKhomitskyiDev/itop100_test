@@ -1,7 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const User = require('../controllers/user')
+const verifySignUp = require('../guards/authVerify')
 const jwt = require('jsonwebtoken')
+const verify  =require('../guards/authVerify')
 
 //Get all users.
 router.get('/', async (req,res) => {
@@ -19,9 +21,19 @@ router.post('/user/register', async (req,res) => {
 //login a user.
 router.post('/user/login', async (req,res) => {
     let data = req.body;
-    const result = new User().loginUser(data, res);
-    console.log(result)
-    res.send(result)
+    return new User().loginUser(data, res);
+});
+
+// logout a user
+router.get('/logout', function(req, res, next) {
+    // remove the req.user property and clear the login session
+    req.logout();
+
+    // destroy session data
+    req.session = null;
+
+    // redirect to homepage
+    res.redirect('/');
 });
 
 //Update a user.

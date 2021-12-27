@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistrationUser from "./pages/RegistrationUser";
 import Login from "./pages/Login";
 import GlobalStyles from "./styles/globalStyles";
-import Users from "./pages/Users";
+import Profiles from "./pages/Profiles";
 
 function App() {
     return (
@@ -17,7 +17,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<RegistrationUser />}/>
                   <Route path="/login" element={<Login />}/>
-                  <Route path="/users" element={<Users />}/>
+                  <Route path="/profiles" element={<Profiles />}/>
                 </Routes>
               </BrowserRouter>
             </Provider>

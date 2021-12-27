@@ -28,6 +28,8 @@ class User {
     return res;
   }
 
+
+
   //update a user.
   async updateUser(userId) {
     //get the previous user.

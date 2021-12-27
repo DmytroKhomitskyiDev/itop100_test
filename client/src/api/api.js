@@ -18,5 +18,14 @@ export const loginUserRequest = async (data) => {
 
 
 
+export const createProfileRequest = async (data) => {
+    return axios.post(`http://localhost:4000/private/profile/create`, data, {headers: getHeaders()})
+}
+
+export const getProfilesRequest = async () => {
+    return axios.get(`http://localhost:4000/private/profile`, {headers: getHeaders()})
+}
+
+
 
 

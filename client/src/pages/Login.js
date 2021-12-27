@@ -1,16 +1,16 @@
 import React from "react";
-import {Button, Checkbox, Col, Form} from "antd";
-import {SInput} from "../styles/styled";
+import {Button, Checkbox, Col, Form, Input} from "antd";
 import Title from "antd/es/typography/Title";
 import {loginUserRequest} from "../api/api";
-import style from "./style.module.css"
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
+    let navigate = useNavigate();
     const onFinish = async (value) => {
         const {data} = await loginUserRequest(value)
         if(data.success){
             localStorage.setItem('token', data.token)
-            // Redirect to profile list page
+            navigate(`/users`)
         }
     }
 
@@ -20,7 +20,7 @@ const Login = () => {
 
     return (
         <div className="App">
-            <Title style={style.h1}>Sign in</Title>
+            <Title >Sign in</Title>
             <Form
                 name="basic"
                 className='formAuth'
@@ -35,14 +35,14 @@ const Login = () => {
                     name="email"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
-                    <SInput />
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <SInput.Password />
+                    <Input.Password />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }}>
                     <Button className={'btnLogin'} htmlType="submit">
