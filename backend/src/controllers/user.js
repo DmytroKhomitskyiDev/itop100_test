@@ -20,12 +20,31 @@ class User {
   }
 
   //login
-  async loginUser(user) {
-    console.log(user)
-    const res = await db
-        .query("")
-        .catch(console.log);
-    return res;
+  async loginUser(data, res) {
+    const user = await db.query(`SELECT * FROM users WHERE email=$1`, [data.email])
+    if (!user.rows.length) {
+      return res.status(400).send({
+        success: false,
+        message: "User not exist"
+      })
+    }
+
+    const validPassword = await bcrypt.compare(data.password, user.rows[0].password)
+    if(!validPassword) {
+      return res.status(400).send({
+        success: false,
+        message: "Password is incorrect"
+      })
+    }
+
+    const token = jwt.sign({id: user.rows[0].id}, process.env.TOKEN_SECRET)
+    const {password, ...userData} = user.rows[0]
+
+    return res.header("auth-token", token).send({
+      success: true,
+      token,
+      user: userData
+    })
   }
 
 
