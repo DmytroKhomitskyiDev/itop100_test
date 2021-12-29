@@ -2,9 +2,16 @@ const db = require("../config/db");
 
 class Profile {
 
-    async getProfiles() {
-        const result = await db.query(`SELECT * FROM profiles`).catch(console.log)
-        return result.rows
+    async getProfiles(res,userId) {
+        const result = await db.query(`SELECT * FROM profiles WHERE user_id=$1`,[userId]).catch(console.log)
+        return res.send(result.rows)
+    }
+
+    async deleteProfile(id, res) {
+        await db.query(`DELETE FROM profiles WHERE id=$1`,[id]).catch(console.log)
+        return res.send({
+            success: true
+        });
     }
 
     //create a profile.

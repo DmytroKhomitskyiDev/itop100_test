@@ -1,17 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Checkbox, Col, Form, Input} from "antd";
 import Title from "antd/es/typography/Title";
 import {loginUserRequest} from "../api/api";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "../redux/actions";
 
 const Login = () => {
     let navigate = useNavigate();
+
+
+
     const onFinish = async (value) => {
         const {data} = await loginUserRequest(value)
         if(data.success){
             localStorage.setItem('token', data.token)
+            localStorage.setItem('user', JSON.stringify(data.user))
             navigate(`/users`)
         }
+
     }
 
     const onFinishFailed = (error) => {

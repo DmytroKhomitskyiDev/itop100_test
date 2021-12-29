@@ -10,13 +10,13 @@ class User {
   }
 
   //create a user.
-  async createUser(user) {
+  async createUser(user,res) {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(user.password, salt)
-    const res = await db
-      .query(`insert into users (userName, email, password, isAdmin) values ($1, $2, $3, $4)`, [user.username, user.email, hashedPassword, user.isAdmin])
+     await db
+      .query(`insert into users (userName, email, password, isadmin) values ($1, $2, $3, $4)`, [user.username, user.email, hashedPassword, user.isAdmin || false])
       .catch(console.log);
-    return res;
+    return res.send({success:true});
   }
 
   //login

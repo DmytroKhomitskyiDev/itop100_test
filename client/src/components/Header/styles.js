@@ -42,4 +42,7 @@ export const SHeader = styled.header`
     line-height: 27px;
     letter-spacing: 0.75px;
   }
+  .navList:not(:first-child) img{
+    vertical-align: baseline;
+  }
 `

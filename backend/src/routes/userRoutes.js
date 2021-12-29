@@ -14,26 +14,13 @@ router.get('/', async (req,res) => {
 //Register a user.
 router.post('/user/register', async (req,res) => {
     let data = req.body;
-    const result = new User().createUser(data, res);
-    res.send(result)
+    return new User().createUser(data, res);
 });
 
 //login a user.
 router.post('/user/login', async (req,res) => {
     let data = req.body;
     return new User().loginUser(data, res);
-});
-
-// logout a user
-router.get('/logout', function(req, res, next) {
-    // remove the req.user property and clear the login session
-    req.logout();
-
-    // destroy session data
-    req.session = null;
-
-    // redirect to homepage
-    res.redirect('/');
 });
 
 //Update a user.
@@ -46,7 +33,7 @@ router.put('/user/:userId', async (req,res) => {
 //Delete a user.
 router.delete('/users/:userId', async (req,res) => {
     let {userId} = req.params;
-    await new User().deleteUser(userId);
+    await new User().deleteUser(userId, res);
     let users = await new User().getUsers();
 });
 

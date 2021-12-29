@@ -2,11 +2,16 @@ import {registerUserRequest} from "../api/api";
 import Title from "antd/es/typography/Title";
 import {Button, Checkbox, Form, Input} from "antd";
 import Row from "antd/es/descriptions/Row";
+import {useNavigate} from "react-router-dom";
 
 const RegistrationUser = () => {
+    const navigation = useNavigate()
 
-    const onFinish = (values) => {
-        registerUserRequest(values)
+    const onFinish = async (values) => {
+        const {data} = await registerUserRequest(values)
+       if(data.success){
+           navigation('/login')
+       }
     };
 
     const onFinishFailed = (errorInfo) => {

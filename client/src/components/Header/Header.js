@@ -8,8 +8,9 @@ import {SHeader} from "./styles";
 
 const Header = () => {
     let navigate = useNavigate();
+
     const handleLogOut = () => {
-      localStorage.removeItem('token');
+        localStorage.removeItem('token');
         navigate('/login')
     }
 

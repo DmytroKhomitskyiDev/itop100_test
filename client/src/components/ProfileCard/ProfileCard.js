@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import deleteImg from "../../image/icons/Delete.svg"
 import edit from "../../image/icons/edit.svg"
-import {SCard} from "./style";
+import {SCard} from "../../styles/commonStyles";
+import {SCardBottom} from "./style";
 
-const Card = ({name,gender,birthdate,city}) => {
+const ProfileCard = ({profile:{name,gender,birthdate,city},...props}) => {
+
+
     return (
         <>
             <SCard>
@@ -13,14 +16,13 @@ const Card = ({name,gender,birthdate,city}) => {
                     <p className="cardInfo">{birthdate}</p>
                     <p className="cardInfo">{city}</p>
                 </div>
-                <div className="cardBottom">
+                <SCardBottom>
                     <button>edit <img src={edit} alt="edit"/></button>
-                    <button>delete <img src={deleteImg} alt="delete"/></button>
-                </div>
+                    <button onClick={props.deleteProfile}>delete <img src={deleteImg} alt="delete"/></button>
+                </SCardBottom>
             </SCard>
         </>
-
     )
 }
 
-export default Card
+export default ProfileCard

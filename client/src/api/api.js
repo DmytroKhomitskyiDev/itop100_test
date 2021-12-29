@@ -8,6 +8,8 @@ const getHeaders = () => {
     }
 }
 
+
+
 export const registerUserRequest = async (data) => {
     return axios.post(`http://localhost:4000/api/user/register`, data)
 }
@@ -16,14 +18,16 @@ export const loginUserRequest = async (data) => {
     return axios.post(`http://localhost:4000/api/user/login`, data)
 }
 
-
-
 export const createProfileRequest = async (data) => {
     return axios.post(`http://localhost:4000/private/profile/create`, data, {headers: getHeaders()})
 }
 
 export const getProfilesRequest = async () => {
-    return axios.get(`http://localhost:4000/private/profile`, {headers: getHeaders()})
+    return axios.get(`http://localhost:4000/private/profiles/list`, {headers: getHeaders()})
+}
+
+export const deleteProfileRequest = async (id) => {
+    await axios.delete(`http://localhost:4000/private/profile/${id}`,{headers: getHeaders()})
 }
 
 
