@@ -1,7 +1,6 @@
 import {registerUserRequest} from "../api/api";
 import Title from "antd/es/typography/Title";
 import {Button, Checkbox, Form, Input} from "antd";
-import Row from "antd/es/descriptions/Row";
 import {useNavigate} from "react-router-dom";
 
 const RegistrationUser = () => {

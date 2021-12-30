@@ -2,10 +2,10 @@ const db = require("../config/db");
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-class User {
+class UserController {
   //get all users.
-  async getUsers() {
-    let results = await db.query(`SELECT * FROM users`).catch(console.log);
+  async getUsers(id) {
+    let results = await db.query(`SELECT * FROM users WHERE NOT id=$1`,[id]).catch(console.log);
     return results.rows.some(row => row.id) ? results.rows : [];
   }
 
@@ -65,4 +65,4 @@ class User {
   }
 }
 
-module.exports = User;
+module.exports = new UserController;

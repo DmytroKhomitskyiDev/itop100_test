@@ -4,7 +4,7 @@ import Colors from "../../styles/colors";
 export const SAddCard = styled.div `
   max-width: 320px;
   width: 100%;
-  padding: 84px 0;
+  padding: 75px 0;
   border: 1px solid #D6D8E7;
   box-sizing: border-box;
   box-shadow: 0px 8px 16px rgba(17, 17, 17, 0.04);

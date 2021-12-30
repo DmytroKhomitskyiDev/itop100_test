@@ -3,13 +3,10 @@ import {Button, Checkbox, Col, Form, Input} from "antd";
 import Title from "antd/es/typography/Title";
 import {loginUserRequest} from "../api/api";
 import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../redux/actions";
 
 const Login = () => {
+
     let navigate = useNavigate();
-
-
 
     const onFinish = async (value) => {
         const {data} = await loginUserRequest(value)
@@ -18,7 +15,6 @@ const Login = () => {
             localStorage.setItem('user', JSON.stringify(data.user))
             navigate(`/users`)
         }
-
     }
 
     const onFinishFailed = (error) => {
@@ -56,7 +52,6 @@ const Login = () => {
                         Sign In
                     </Button>
                 </Form.Item>
-
             </Form>
         </div>
     )

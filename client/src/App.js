@@ -9,7 +9,9 @@ import GlobalStyles from "./styles/globalStyles";
 import Profiles from "./pages/Profiles";
 import Users from "./pages/Users";
 import {setUser} from "./redux/actions";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/routes/PrivateRoute";
+import AdminRoute from "./components/routes/AdminRoute";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
           <Route path="/register" element={<RegistrationUser />}/>
            <Route path="/login" element={<Login />}></Route>
           <Route path="/profiles" element={<PrivateRoute><Profiles /></PrivateRoute>}/>
+            <Route path="/dashboard" element={<AdminRoute><Dashboard/></AdminRoute>}/>
           <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>}/>
         </Routes>
       </BrowserRouter>
