@@ -1,16 +1,27 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import user from "../../image/avatarUser.svg"
+import userAdmin from "../../image/avatarAdmin.svg"
 import profile from "../../image/icons/profile.svg"
 import users from "../../image/icons/users.svg"
 import dashboard from "../../image/icons/dashbord.svg"
 import {SHeader} from "./styles";
+import {useDispatch, useSelector} from "react-redux";
+import {SET_USER} from "../../redux/actionType";
+import {setUser} from "../../redux/actions";
 
 const Header = () => {
     let navigate = useNavigate();
 
+    const dispatch = useDispatch()
+    const currentUser = useSelector( state => {
+        return state.user.user
+    })
+
     const handleLogOut = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        dispatch(setUser({}))
         navigate('/login')
     }
 
@@ -18,7 +29,7 @@ const Header = () => {
         <SHeader>
             <div className="container">
                 <div className="logo">
-                    <Link to={"/"}><img src={user} alt="user"/> <span className={'logoTitle'}>User</span></Link>
+                    <Link to={"/"}><img src={currentUser.isadmin ? userAdmin : user} alt="user"/> <span className={'logoTitle'}>{currentUser.username}</span></Link>
                 </div>
                 <nav>
                     <ul className={'nav'}>

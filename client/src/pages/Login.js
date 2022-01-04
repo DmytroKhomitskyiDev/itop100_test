@@ -3,15 +3,18 @@ import {Button, Checkbox, Col, Form, Input} from "antd";
 import Title from "antd/es/typography/Title";
 import {loginUserRequest} from "../api/api";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setUser} from "../redux/actions";
 
 const Login = () => {
 
     let navigate = useNavigate();
-
+    const dispatch = useDispatch()
     const onFinish = async (value) => {
         const {data} = await loginUserRequest(value)
         if(data.success){
             localStorage.setItem('token', data.token)
+            dispatch(setUser(data.user))
             localStorage.setItem('user', JSON.stringify(data.user))
             navigate(`/users`)
         }

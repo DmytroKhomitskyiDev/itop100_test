@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {SCard} from "../../styles/commonStyles";
 
 const UserCard = ({users}) => {

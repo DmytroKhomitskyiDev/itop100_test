@@ -9,20 +9,37 @@ import ProfileFormModal from "../components/ProfileFormModal/ProfileFormModal";
 
 const Profiles = () => {
 
-    const [profiles, setProfiles] = useState()
+    const [profiles, setProfiles] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeProfile, setActiveProfile] = useState({id:null,name:'',gender:'male',birthdate:moment(),city:''})
+    const [isLoader, setIsLoader] = useState(false)
+    const [isLoaderUser, setIsLoaderUser] = useState(false)
+
+    const getProfiles = async () => {
+        setIsLoaderUser(true)
+        await getProfilesRequest().then( ({data}) => {
+            setProfiles(data)
+            setIsLoaderUser(false)
+        })
+    }
 
     useEffect(()=> {
-        const getProfiles = async () => {
-            const {data} = await getProfilesRequest()
-            setProfiles(data)
-        }
         getProfiles()
     },[])
 
+    useEffect(() => {
+        if(isLoader){
+            setIsModalVisible(false)
+            getProfiles()
+        }
+    },[isLoader])
+
+
     const deleteProfile = async (value) => {
-        const data = await deleteProfileRequest(value);
+        setIsLoader(true)
+         await deleteProfileRequest(value).finally(param => {
+             setIsLoader(false)
+         })
     }
 
     const editProfile = (values) => {
@@ -30,10 +47,13 @@ const Profiles = () => {
         setIsModalVisible(true)
     }
 
-    if(!profiles) return <Spin/>
-
     return(
         <>
+            {isLoaderUser && (
+                <div style={{width:"100%", height:'100%', position:'fixed',background:'rgba(255,255,255,0.7)',zIndex:55}}>
+                    <Spin/>
+                </div>
+            )}
             <Header />
             <div className="container">
                 <ProfileFormModal
@@ -41,6 +61,8 @@ const Profiles = () => {
                     activeProfile={activeProfile}
                     setIsModalVisible={setIsModalVisible}
                     setActiveProfile={setActiveProfile}
+                    setIsLoader={setIsLoader}
+                    isLoader={isLoader}
                 />
                 <h1>Profiles:</h1>
                     <Row gutter={24}>

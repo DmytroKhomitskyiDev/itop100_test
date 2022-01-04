@@ -6,6 +6,12 @@ const AdminRoute =({ children, ...rest }) => {
     let auth = localStorage.getItem('token');
     let user = JSON.parse(localStorage.getItem('user'));
 
-    return user.isadmin && auth ? children : <Navigate to="/login" />
+    if(user.isadmin && auth) {
+        return children
+    }
+
+    if(!auth) return <Navigate to="/login" />
+
+    if(!user.isadmin) return <Navigate to="/profiles" />
 }
 export default AdminRoute

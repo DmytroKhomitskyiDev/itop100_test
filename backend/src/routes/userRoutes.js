@@ -3,15 +3,10 @@ const router = express.Router();
 const UserController = require('../controllers/user')
 const verifySignUp = require('../guards/authVerify')
 const jwt = require('jsonwebtoken')
-const verify  =require('../guards/authVerify')
+const verify  = require('../guards/authVerify')
+const adminVerify = require('../guards/adminVeryfy')
 
-//Get all users.
-router.get('/users',verify, async (req,res) => {
-    console.log(req.user)
-    const {id} = req.user
-    let users = await UserController.getUsers(id);
-    res.send(users)
-});
+
 
 //Register a user.
 router.post('/user/register', async (req,res) => {
@@ -38,5 +33,6 @@ router.delete('/users/:userId', async (req,res) => {
     await new User().deleteUser(userId, res);
     let users = await UserController.getUsers();
 });
+
 
 module.exports = router;

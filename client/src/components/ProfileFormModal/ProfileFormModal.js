@@ -7,18 +7,36 @@ import {createProfileRequest, editProfileRequest} from "../../api/api";
 import {initialProfileValues} from "../../helpers/constants";
 import {getFormatedData} from "../../helpers/utils";
 
-const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setActiveProfile}) => {
+const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setActiveProfile,setIsLoader,isLoader}) => {
 
     const [form] = Form.useForm()
 
     const onFinish = (values) => {
+
+        setIsLoader(true)
         values.birthdate = moment(new Date(values.birthdate)).format("DD.MM.YYYY")
         if(activeProfile.id) {
-            editProfileRequest(values,activeProfile.id)
+            editProfileRequest(values,activeProfile.id).then(({data}) => {
+                if(data.success){
+                    setActiveProfile(initialProfileValues)
+                    setIsModalVisible(false);
+                }
+            }).catch(e => {
+                console.log(e)
+            }).finally(param => {
+                setIsLoader(false)
+            })
         } else {
-            createProfileRequest(values)
+            createProfileRequest(values).then(({data}) => {
+                if(data.success){
+                    setIsModalVisible(false);
+                }
+            }).catch(e => {
+                console.log(e)
+            }).finally(param => {
+                setIsLoader(false)
+            })
         }
-        setIsModalVisible(false);
     };
 
     const handleCancel = () => {
@@ -76,7 +94,7 @@ const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setAct
                     <Input/>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }}>
-                    <Button className={'btnLogin'} htmlType="submit">
+                    <Button className={'btnLogin'} htmlType="submit" loading={isLoader}>
                         ok
                     </Button>
                 </Form.Item>

@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 const RegistrationUser = () => {
     const navigation = useNavigate()
 
+
     const onFinish = async (values) => {
         const {data} = await registerUserRequest(values)
        if(data.success){

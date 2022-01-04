@@ -3,11 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 class UserController {
-  //get all users.
-  async getUsers(id) {
-    let results = await db.query(`SELECT * FROM users WHERE NOT id=$1`,[id]).catch(console.log);
-    return results.rows.some(row => row.id) ? results.rows : [];
-  }
+
 
   //create a user.
   async createUser(user,res) {
@@ -46,7 +42,6 @@ class UserController {
       user: userData
     })
   }
-
 
 
   //update a user.

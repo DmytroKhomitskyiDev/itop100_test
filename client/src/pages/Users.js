@@ -3,22 +3,30 @@ import Header from "../components/Header/Header";
 import {Col, Row, Spin} from "antd";
 import UserCard from "../components/UserCard/UserCard";
 import {getUsersRequest} from "../api/api";
+import {Link} from "react-router-dom";
 
 const Users = () => {
 
-    const [users, setUsers] = useState()
+    const [users, setUsers] = useState([])
+    const [loader, setLoader] = useState(false)
 
-    useEffect(()=> {
+    useEffect(() => {
         const getUsers = async() => {
-           const {data} = await getUsersRequest()
-            setUsers(data)
+
+           setLoader(true)
+           await getUsersRequest().then(({data}) => {
+               setUsers(data.data)
+               setLoader(false)
+           }).catch(e => {
+               console.log(e)
+               setLoader(false)
+           })
         }
         getUsers()
     },[])
 
-    if(!users) return <Spin/>
+    if(loader) return <Spin/>
 
-    console.log(users)
     return (
         <>
             <Header />
@@ -28,7 +36,9 @@ const Users = () => {
                     {users.map(el => {
                         return(
                             <Col span={6} key={el.id}>
-                                <UserCard users={el}/>
+                                <Link to={`/user/${el.id}`}>
+                                     <UserCard users={el}/>
+                                </Link>
                             </Col>
                         )
                     })}
