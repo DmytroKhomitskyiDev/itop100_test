@@ -2,6 +2,7 @@ import {registerUserRequest} from "../api/api";
 import Title from "antd/es/typography/Title";
 import {Button, Checkbox, Form, Input} from "antd";
 import {useNavigate} from "react-router-dom";
+import {SForm} from "../styles/commonStyles";
 
 const RegistrationUser = () => {
     const navigation = useNavigate()
@@ -21,7 +22,7 @@ const RegistrationUser = () => {
     return (
         <div className="App">
             <Title style={{marginBottom:"130px"}}>Create your account</Title>
-            <Form
+            <SForm
                 name="basic"
                 className="formAuth"
                 layout="vertical"
@@ -64,7 +65,7 @@ const RegistrationUser = () => {
                         </Button>
                 </Form.Item>
 
-            </Form>
+            </SForm>
         </div>
     )
 }

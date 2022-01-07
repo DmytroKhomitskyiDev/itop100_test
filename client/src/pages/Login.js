@@ -5,6 +5,7 @@ import {loginUserRequest} from "../api/api";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setUser} from "../redux/actions";
+import {SForm} from "../styles/commonStyles";
 
 const Login = () => {
 
@@ -27,7 +28,7 @@ const Login = () => {
     return (
         <div className="App">
             <Title >Sign in</Title>
-            <Form
+            <SForm
                 name="basic"
                 className='formAuth'
                 layout="vertical"
@@ -55,7 +56,7 @@ const Login = () => {
                         Sign In
                     </Button>
                 </Form.Item>
-            </Form>
+            </SForm>
         </div>
     )
 }

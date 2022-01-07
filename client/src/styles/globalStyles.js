@@ -47,6 +47,22 @@ export default createGlobalStyle`
       .userIdInfo.userStatus{
         font-size: 24px;
         line-height: 36px;
+        margin-bottom: 25px;
       }
+      .userBtnGroup img:first-child{
+        margin-right: 35px;
+      }
+      .userBtnGroup img{
+        filter: brightness(0.5);
+        width: 24px;
+        cursor: pointer;
+      }
+    }
+    .ant-input:focus{
+      outline: none;
+      box-shadow: none;
+    }
+    .ant-input-affix-wrapper:focus{
+      box-shadow: none;
     }
 `

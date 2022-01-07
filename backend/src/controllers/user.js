@@ -43,21 +43,6 @@ class UserController {
     })
   }
 
-
-  //update a user.
-  async updateUser(userId) {
-    //get the previous user.
-    let original_user = await db
-      .query()
-      .catch(console.log);
-    return;
-  }
-
-  //delete a user.
-  async deleteUser(userId) {
-    await db.query(`DELETE FROM users WHERE id=$1`, [parseInt(userId)]).catch(console.log);
-    return;
-  }
 }
 
 module.exports = new UserController;

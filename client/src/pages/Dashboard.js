@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Header from "../components/Header/Header";
-import {Col, Row, Spin} from "antd";
+import { Row, Spin} from "antd";
 import {getDashBoardRequest} from "../api/api";
 import DashboardCard from "../components/DashboardCard/DashboardCard";
 

@@ -5,6 +5,13 @@ export const initialProfileValues = {
     name: '',
     gender:'male',
     birthdate: moment(),
-    city:''
+    city:'',
+    currentUserId: null
 }
+
+// export const initialUserValues = {
+//     id: null,
+//     username: '',
+//     isadmin: false,
+// }
 

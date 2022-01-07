@@ -10,15 +10,14 @@ const UserController = require("../controllers/user");
 // get profiles
 router.get('/profiles/list', verify, async (req,res) => {
     const { id } = req.user
-    console.log(req.user,'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return ProfileController.getProfiles(res, id);
 });
 
 //create a profiles.
-router.post('/profile/create',verify, async (req,res) => {
+router.post('/profile/create/:currentUserId',verify, async (req,res) => {
     const data = req.body;
-    const { id } = req.user
-    return ProfileController.createProfile(data, res, id);
+    let {currentUserId} = req.params;
+    return ProfileController.createProfile(data, res, currentUserId);
 });
 
 // delete profile

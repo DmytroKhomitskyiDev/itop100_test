@@ -34,6 +34,23 @@ class AdminController {
             data:[{count: users.rowCount,name:"users"}, {count: profiles.rowCount,name:"profiles"}, {count: profilesAdult.length,name:"adult"}]
         })
     }
+
+    //update user.
+    async updateUser(values, res, userId) {
+        await db.query(`UPDATE users SET username=$1, email=$2, isadmin=$3 WHERE id=$4`,[values.username,values.email,values.isadmin, userId]).catch(console.log);
+        res.status(200).send({
+            success: true
+        })
+    }
+
+    //delete user and profiles
+    async deleteUser(userId, res) {
+      await db.query(`DELETE FROM users WHERE id=$1`, [userId]).catch(console.log);
+      await db.query(`DELETE FROM profiles WHERE user_id=$1`, [userId]).catch(console.log);
+      res.status(200).send({
+          success: true
+      })
+    }
 }
 
 

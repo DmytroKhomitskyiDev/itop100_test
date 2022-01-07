@@ -1,50 +1,60 @@
 import React, {useEffect} from "react";
-import Modal from "antd/es/modal/Modal";
 import {Button, DatePicker, Form, Input, Radio} from "antd";
 import {locale} from "moment";
 import moment from "moment";
 import {createProfileRequest, editProfileRequest} from "../../api/api";
 import {initialProfileValues} from "../../helpers/constants";
 import {getFormatedData} from "../../helpers/utils";
+import {useDispatch, useSelector} from "react-redux";
+import {setActiveProfile, toggleIsLoader, toggleOpenModalProfile} from "../../redux/actions";
+import {SModal} from "../../styles/commonStyles";
+import agreeImg from "../../image/icons/agree.svg"
+import cancelImg from "../../image/icons/cansel.svg"
 
-const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setActiveProfile,setIsLoader,isLoader}) => {
+const ProfileFormModal = () => {
 
+    const isModalVisible = useSelector(state => state.profile.isModalVisible)
+    const activeProfile = useSelector(state => state.profile.activeProfile)
+    const isLoader = useSelector(state => state.profile.isLoader)
+
+
+    const dispatch = useDispatch()
     const [form] = Form.useForm()
-
     const onFinish = (values) => {
 
-        setIsLoader(true)
         values.birthdate = moment(new Date(values.birthdate)).format("DD.MM.YYYY")
         if(activeProfile.id) {
             editProfileRequest(values,activeProfile.id).then(({data}) => {
                 if(data.success){
-                    setActiveProfile(initialProfileValues)
-                    setIsModalVisible(false);
+                    dispatch(setActiveProfile(initialProfileValues))
+                    dispatch(toggleOpenModalProfile())
+                    dispatch(toggleIsLoader())
                 }
             }).catch(e => {
                 console.log(e)
             }).finally(param => {
-                setIsLoader(false)
+                dispatch(toggleIsLoader())
             })
         } else {
-            createProfileRequest(values).then(({data}) => {
+            createProfileRequest(values,activeProfile.currentUserId).then(({data}) => {
                 if(data.success){
-                    setIsModalVisible(false);
+                    dispatch(toggleOpenModalProfile())
+                    dispatch(toggleIsLoader())
                 }
             }).catch(e => {
                 console.log(e)
             }).finally(param => {
-                setIsLoader(false)
+                dispatch(toggleIsLoader())
             })
         }
     };
 
     const handleCancel = () => {
-        setIsModalVisible(false);
+        dispatch(toggleOpenModalProfile())
         setTimeout(() => {
             form.setFieldsValue(initialProfileValues)
-            setActiveProfile(initialProfileValues)
-        }, 100)
+            dispatch(setActiveProfile(initialProfileValues))
+        }, 10)
     };
 
     useEffect(() => {
@@ -53,7 +63,7 @@ const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setAct
     },[activeProfile])
 
     return(
-        <Modal visible={isModalVisible}  onCancel={handleCancel} footer={null} >
+        <SModal visible={isModalVisible}  onCancel={handleCancel} footer={null} >
             <Form
                 name="basic"
                 className='formAuth'
@@ -63,14 +73,14 @@ const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setAct
                 form={form}
             >
                 <Form.Item
-                    label="name"
+                    label="name:"
                     name="name"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="gender"
+                    label="gender:"
                     name="gender"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
@@ -80,26 +90,29 @@ const ProfileFormModal = ({isModalVisible,activeProfile,setIsModalVisible,setAct
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
-                    label="birthdate"
+                    label="birthdate:"
                     name="birthdate"
                     rules={[{ required: true, message: 'Please input date' }]}
                 >
                     <DatePicker locale={locale} format={'DD.MM.YYYY'}/>
                 </Form.Item>
                 <Form.Item
-                    label="city"
+                    label="city:"
                     name="city"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
                     <Input/>
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 25 }}>
-                    <Button className={'btnLogin'} htmlType="submit" loading={isLoader}>
-                        ok
+                <Form.Item wrapperCol={{ offset: 25 }} className={'groupBtnModal'}>
+                    <Button className={'btnOk'} htmlType="submit" loading={isLoader}>
+                        <img src={agreeImg} alt="agree"/>
                     </Button>
+                    <span className={"closeBtn"} onClick={handleCancel}>
+                        <img src={cancelImg} alt="agree"/>
+                    </span>
                 </Form.Item>
             </Form>
-        </Modal>
+        </SModal>
     )
 }
 

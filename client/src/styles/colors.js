@@ -1,4 +1,4 @@
-const Colors = {
+const colors = {
     TITLE: '#14142B',
     BACKGROUND: '#F7F7FC',
     GREEN: '#00BA88',
@@ -10,6 +10,7 @@ const Colors = {
     RED: '#EB0055',
     WHITE: '#FFFFFF',
     PURPLE: '#624AF2',
-    ADD_PROFILE: '#4E4B66'
+    ADD_PROFILE: '#4E4B66',
+    GREY: '#6E7191'
 }
-export default Colors
+export default colors

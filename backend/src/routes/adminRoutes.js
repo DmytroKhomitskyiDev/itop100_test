@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminVerify = require("../guards/adminVeryfy");
 const AdminController = require("../controllers/admin");
+const UserController = require("../controllers/user");
 
 //Get all users.
 router.get('/users',adminVerify, async (req,res) => {
@@ -18,6 +19,19 @@ router.get('/user/:id',adminVerify, async (req,res) => {
 router.get('/dashboard',adminVerify, async (req,res) => {
     console.log(req.user)
     return AdminController.getDashboard(res)
+});
+
+//Update a user.
+router.put('/user/:userId', async (req,res) => {
+    let {userId} = req.params;
+    const value = req.body
+    await AdminController.updateUser(value,res, userId);
+});
+
+//delete user and profiles.
+router.delete('/user/:userId', async (req,res) => {
+    let {userId} = req.params;
+    await AdminController.deleteUser(userId,res);
 });
 
 module.exports = router;

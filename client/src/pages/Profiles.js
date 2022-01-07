@@ -4,16 +4,18 @@ import ProfileCard from "../components/ProfileCard/ProfileCard";
 import AddCardProfile from "../components/AddCardProfile/AddCardProfile";
 import {deleteProfileRequest, getProfilesRequest} from "../api/api";
 import {Col, Row, Spin} from "antd";
-import moment from "moment";
-import ProfileFormModal from "../components/ProfileFormModal/ProfileFormModal";
+import {useDispatch, useSelector} from "react-redux";
+import {setActiveProfile, toggleIsLoader, toggleOpenModalProfile} from "../redux/actions";
+import {initialProfileValues} from "../helpers/constants";
 
 const Profiles = () => {
 
     const [profiles, setProfiles] = useState([])
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [activeProfile, setActiveProfile] = useState({id:null,name:'',gender:'male',birthdate:moment(),city:''})
-    const [isLoader, setIsLoader] = useState(false)
     const [isLoaderUser, setIsLoaderUser] = useState(false)
+    const isLoader = useSelector(state => state.profile.isLoader)
+
+    const currentUserId = useSelector(state => state.user.user.id)
+    const dispatch = useDispatch()
 
     const getProfiles = async () => {
         setIsLoaderUser(true)
@@ -29,22 +31,29 @@ const Profiles = () => {
 
     useEffect(() => {
         if(isLoader){
-            setIsModalVisible(false)
             getProfiles()
         }
     },[isLoader])
 
-
     const deleteProfile = async (value) => {
-        setIsLoader(true)
+        dispatch(toggleIsLoader())
          await deleteProfileRequest(value).finally(param => {
-             setIsLoader(false)
+             dispatch(toggleIsLoader())
          })
     }
 
     const editProfile = (values) => {
-        setActiveProfile(values)
-        setIsModalVisible(true)
+        dispatch(setActiveProfile(values))
+        dispatch(toggleOpenModalProfile())
+    }
+
+    const addProfileLoginUser = () => {
+        const preparePropsActiveProfile = {
+            ...initialProfileValues,
+            currentUserId: currentUserId
+        }
+        dispatch(setActiveProfile(preparePropsActiveProfile))
+        dispatch(toggleOpenModalProfile())
     }
 
     return(
@@ -56,14 +65,6 @@ const Profiles = () => {
             )}
             <Header />
             <div className="container">
-                <ProfileFormModal
-                    isModalVisible={isModalVisible}
-                    activeProfile={activeProfile}
-                    setIsModalVisible={setIsModalVisible}
-                    setActiveProfile={setActiveProfile}
-                    setIsLoader={setIsLoader}
-                    isLoader={isLoader}
-                />
                 <h1>Profiles:</h1>
                     <Row gutter={24}>
                         {profiles.map(el => {
@@ -72,12 +73,12 @@ const Profiles = () => {
                                      <ProfileCard
                                          profile={el}
                                          deleteProfile={() => deleteProfile(el.id)}
-                                          editProfile={editProfile}
+                                         editProfile={editProfile}
                                      />
                                 </Col>
                             )
                         })}
-                        <AddCardProfile setIsModalVisible={setIsModalVisible}/>
+                        <AddCardProfile setIsModalVisible={addProfileLoginUser}/>
                     </Row>
             </div>
 
