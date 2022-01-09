@@ -36,7 +36,9 @@ class UserController {
     const token = jwt.sign({id: user.rows[0].id}, process.env.TOKEN_SECRET)
     const {password, ...userData} = user.rows[0]
 
-    return res.header("auth-token", token).send({
+    res.header("auth-token", token)
+
+    return res.status(200).send({
       success: true,
       token,
       user: userData

@@ -12,6 +12,7 @@ router.post('/user/register', async (req,res) => {
 //login a user.
 router.post('/user/login', async (req,res) => {
     let data = req.body;
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req)
     return UserController.loginUser(data, res);
 });
 

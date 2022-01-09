@@ -31,15 +31,13 @@ const Header = () => {
                     <Link to={"/"}><img src={currentUser.isadmin ? userAdmin : user} alt="user"/> <span className={'logoTitle'}>{currentUser.username}</span></Link>
                 </div>
                 <nav>
-                    <ul className={'nav'}>
-                        <li className="navList"><Link to={'/profiles'}><span>Profiles</span><img src={profile} alt="profile"/></Link></li>
-                        {currentUser.isadmin && (
-                            <>
-                                <li className="navList"><Link to={'/dashboard'}><span>Dashboard</span><img src={dashboard} alt="dashboard"/></Link></li>
-                                <li className="navList"><Link to={'/users'}><span>Users</span><img src={users} alt="users"/></Link></li>
-                            </>
-                        )}
-                    </ul>
+                    {currentUser.isadmin && (
+                        <ul className={'nav'}>
+                            <li className="navList"><Link to={'/profiles'}><span>Profiles</span><img src={profile} alt="profile"/></Link></li>
+                            <li className="navList"><Link to={'/dashboard'}><span>Dashboard</span><img src={dashboard} alt="dashboard"/></Link></li>
+                            <li className="navList"><Link to={'/users'}><span>Users</span><img src={users} alt="users"/></Link></li>
+                        </ul>
+                    )}
                     <ul className={'logout'}>
                         <li onClick={()=> handleLogOut()}><span style={{cursor:"pointer"}} >Log out</span></li>
                     </ul>

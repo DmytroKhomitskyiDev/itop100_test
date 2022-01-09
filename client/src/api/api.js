@@ -1,14 +1,13 @@
 import * as axios from "axios";
 
 
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/',
-    headers: {
+const getHeaders = () => {
+    return {
         "auth-token": localStorage.getItem("token"),
         "Content-Type": "application/json",
         Accept: "application/json",
     }
-})
+}
 
 export const registerUserRequest = async (data) => {
     return axios.post(`http://localhost:4000/api/user/register`, data)
@@ -18,40 +17,39 @@ export const loginUserRequest = async (data) => {
     return axios.post(`http://localhost:4000/api/user/login`, data)
 }
 
-export const createProfileRequest = async (data, currentUserId) => {
-    return await instance.post(`private/profile/create/${currentUserId}`, data)
+export const createProfileRequest = async (data) => {
+    return await axios.post(`http://localhost:4000/private/profile/create`, data, {headers: getHeaders()})
 }
 
 export const getProfilesRequest = async () => {
-    return await instance.get(`private/profiles/list`)
+    return axios.get(`http://localhost:4000/private/profiles/list`, {headers: getHeaders()})
 }
 
 export const deleteProfileRequest = async (id) => {
-   return  await instance.delete(`private/profile/${id}`)
+    return  await axios.delete(`http://localhost:4000/private/profile/${id}`,{headers: getHeaders()})
 }
 
 export const editProfileRequest = async (values,id) => {
-   return await instance.put(`private/profile/update/${id}`, {...values})
+    return await axios.put(`http://localhost:4000/private/profile/update/${id}`, {...values},{headers: getHeaders()})
 }
 
 export const getDashBoardRequest = async () => {
-   return await instance.get(`admin/dashboard`)
+    return await axios.get(`http://localhost:4000/admin/dashboard`,{headers: getHeaders()})
 }
 
 export const getUsersRequest = async () => {
-    return instance.get(`admin/users`)
+    return axios.get(`http://localhost:4000/admin/users`, {headers: getHeaders()})
 }
-
 export const getUserById = async (id) => {
-    return instance.get(`admin/user/${id}`)
+    return axios.get(`http://localhost:4000/admin/user/${id}`, {headers: getHeaders()})
 }
 
 export const editUserRequest = async (values,userId) => {
-    return instance.put(`admin/user/${userId}`, {...values})
+    return axios.put(`admin/user/${userId}`, {...values})
 }
 
 export const deleteUserRequest = async (userId) => {
-    return instance.delete(`admin/user/${userId}`)
+    return axios.delete(`admin/user/${userId}`)
 }
 
 

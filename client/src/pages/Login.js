@@ -17,7 +17,7 @@ const Login = () => {
             localStorage.setItem('token', data.token)
             dispatch(setUser(data.user))
             localStorage.setItem('user', JSON.stringify(data.user))
-            navigate(`/users`)
+            navigate(`/profiles`)
         }
     }
 
