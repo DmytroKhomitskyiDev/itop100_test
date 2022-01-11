@@ -17,7 +17,6 @@ router.get('/user/:id',adminVerify, async (req,res) => {
 
 //Get dashboard
 router.get('/dashboard',adminVerify, async (req,res) => {
-    console.log(req.user)
     return AdminController.getDashboard(res)
 });
 
