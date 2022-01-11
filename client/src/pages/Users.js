@@ -37,7 +37,7 @@ const Users = () => {
                         return(
                             <Col span={6} key={el.id}>
                                 <Link to={`/user/${el.id}`}>
-                                     <UserCard users={el}/>
+                                     <UserCard user={el}/>
                                 </Link>
                             </Col>
                         )
