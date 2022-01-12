@@ -2,7 +2,7 @@ const app = require('../index')
 const request = require('supertest')
 
 describe('register user', () => {
-    it('registration user /user/register', async () => {
+    it('registration user success /user/register', async () => {
         const res = await request(app)
             .post('/api/user/register')
             .send({
@@ -13,6 +13,17 @@ describe('register user', () => {
             })
         expect(res.statusCode).toEqual(200)
         expect(res.body.success).toBeTruthy()
+    })
+    it('registration user unsuccessful /user/register', async () => {
+        const res = await request(app)
+            .post('/api/user/register')
+            .send({
+                username:'',
+                email: 'kent@gmail.ua',
+                password: '1234',
+                isadmin: false
+            })
+        expect(res.statusCode).toEqual(400)
     })
 })
 

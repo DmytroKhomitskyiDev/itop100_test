@@ -8,22 +8,27 @@ class AdminController {
             SELECT U.username, U.email, U.id,
                 (SELECT COUNT(id) FROM profiles WHERE user_id=U.id) as count_profile
             FROM users U
-                
             WHERE NOT id=$1
         `,[id]).catch(console.log);
-//LEFT JOIN profiles P ON (P.user_id=U.id)
 
-        console.log(results)
         res.status(200).send({
             success: true,
-            // data: results.rows.some(row => row.id) ? results.rows : []
             data: results.rows
         })
     }
     //get user by id.
     async getUserById(id, res) {
         let results = await db.query(`SELECT * FROM users WHERE id=$1`,[id]).catch(console.log);
+
+        if (!results.rows.length) {
+            res.status(404).send({
+                success: false,
+                message: "Erorr"
+            })
+        }
+
         let profilesUser = await db.query(`SELECT * FROM profiles WHERE user_id=$1`,[id]).catch(console.log);
+
 
         res.status(200).send({
             success: true,
@@ -48,16 +53,21 @@ class AdminController {
 
     //update user.
     async updateUser(values, res, userId) {
-        await db.query(`UPDATE users SET username=$1, email=$2, isadmin=$3 WHERE id=$4`,[values.username,values.email,values.isadmin, userId]).catch(console.log);
-        res.status(200).send({
+       const updateUser = await db.query(`UPDATE users SET username=$1, email=$2, isadmin=$3 WHERE id=$4`,[values.username,values.email,values.isadmin, userId]).catch(console.log);
+        if(updateUser.rowCount === 0) return res.status(400).send({message: `don't have user width ${userId}`})
+
+       res.status(200).send({
             success: true
         })
     }
 
     //delete user and profiles
     async deleteUser(userId, res) {
-      await db.query(`DELETE FROM users WHERE id=$1`, [userId]).catch(console.log);
+     const delUser =  await db.query(`DELETE FROM users WHERE id=$1`, [userId]).catch(console.log);
       await db.query(`DELETE FROM profiles WHERE user_id=$1`, [userId]).catch(console.log);
+
+      if(delUser.rowCount === 0) return res.status(400).send({message: `don't have ${userId}`})
+
       res.status(200).send({
           success: true
       })

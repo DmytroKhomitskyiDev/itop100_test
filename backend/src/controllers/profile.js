@@ -8,14 +8,19 @@ class ProfileController {
     }
 
     async deleteProfile(id, res) {
-        await db.query(`DELETE FROM profiles WHERE id=$1`,[id]).catch(console.log)
+        const deleteProfile = await db.query(`DELETE FROM profiles WHERE id=$1`,[id]).catch(console.log)
+
+        if(deleteProfile.rowCount === 0) return res.status(400).send({message: `don't have ${id}`})
+
         return res.send({
             success: true
         });
     }
 
     async updateProfile(values, res,id) {
-        await db.query(`UPDATE profiles SET name=$1, gender=$2, birthdate=$3, city=$4  WHERE id=$5`,[values.name,values.gender,values.birthdate,values.city, id]).catch(console.log)
+        const createUser =  await db.query(`UPDATE profiles SET name=$1, gender=$2, birthdate=$3, city=$4  WHERE id=$5`,[values.name,values.gender,values.birthdate,values.city, id]).catch(console.log)
+        if(createUser.rowCount === 0) return res.status(400).send({message: `don't have profile width ${id}`})
+
         return res.send({
             success: true
         });

@@ -9,6 +9,9 @@ class UserController {
   async createUser(user,res) {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(user.password, salt)
+
+    if (!user.username) return res.status(400).send({message: 'username required'})
+
      await db
       .query(`insert into users (userName, email, password, isadmin) values ($1, $2, $3, $4)`, [user.username, user.email, hashedPassword, user.isAdmin || false])
       .catch(console.log);
