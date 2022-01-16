@@ -1,7 +1,7 @@
 import {SET_ACTIVE_PROFILE, TOGGLE_IS_LOADER, TOGGLE_OPEN_MODAL_PROFILE} from "./actionType";
 import {initialProfileValues} from "../helpers/constants";
 
-let initialState = {
+export let initialState = {
     isModalVisible: false,
     activeProfile:initialProfileValues,
     isLoader:false

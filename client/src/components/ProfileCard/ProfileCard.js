@@ -23,15 +23,22 @@ const ProfileCard = ({profile,deleteProfile,editProfile}) => {
                     <p className="cardInfo">{city}</p>
                 </div>
                 <SCardBottom>
-                    <button onClick={() => editProfile(profile)}
-                            onMouseEnter={() => handleMouseMove(setIsEditHover, true)}
-                            onMouseLeave={() => handleMouseMove(setIsEditHover, false)}>
-                        edit <img src={isEditHover ? editWhite : edit } alt="edit"/>
+                    <button
+                        onClick={() => editProfile(profile)}
+                        onMouseEnter={() => handleMouseMove(setIsEditHover, true)}
+                        onMouseLeave={() => handleMouseMove(setIsEditHover, false)}
+                        data-testid="editButton"
+                    >
+                        edit
+                        <img src={isEditHover ? editWhite : edit } alt="edit" className="buttonImg"/>
                     </button>
-                    <button  onClick={deleteProfile}
-                             onMouseEnter={() => handleMouseMove(setIsDeleteHover, true)}
-                             onMouseLeave={() => handleMouseMove(setIsDeleteHover, false)}>
-                        delete <img src={isDeleteHover ? deleteImgWhite : deleteImg} alt="delete"/>
+                    <button
+                        onClick={deleteProfile}
+                        onMouseEnter={() => handleMouseMove(setIsDeleteHover, true)}
+                        onMouseLeave={() => handleMouseMove(setIsDeleteHover, false)}
+                        data-testid="deleteButton"
+                    >
+                        delete <img src={isDeleteHover ? deleteImgWhite : deleteImg} alt="delete" className="buttonImg"/>
                     </button>
                 </SCardBottom>
             </SCard>

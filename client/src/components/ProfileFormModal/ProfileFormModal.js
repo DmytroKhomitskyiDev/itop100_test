@@ -63,7 +63,7 @@ const ProfileFormModal = () => {
     },[activeProfile])
 
     return(
-        <SModal visible={isModalVisible}  onCancel={handleCancel} footer={null} >
+        <SModal visible={isModalVisible} onCancel={handleCancel} footer={null} >
             <Form
                 name="basic"
                 className='formAuth'
@@ -71,6 +71,7 @@ const ProfileFormModal = () => {
                 onFinish={onFinish}
                 autoComplete="off"
                 form={form}
+                data-testid="formProfile"
             >
                 <Form.Item
                     label="name:"
@@ -104,7 +105,7 @@ const ProfileFormModal = () => {
                     <Input/>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }} className={'groupBtnModal'}>
-                    <Button className={'btnOk'} htmlType="submit" loading={isLoader}>
+                    <Button className={'btnOk'} htmlType="submit" loading={isLoader} data-testid="closeButton">
                         <img src={agreeImg} alt="agree"/>
                     </Button>
                     <span className={"closeBtn"} onClick={handleCancel}>

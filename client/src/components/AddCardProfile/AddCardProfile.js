@@ -6,7 +6,7 @@ const AddCardProfile = ({setIsModalVisible}) => {
     return(
         <>
             <SAddCard>
-                <div className="add" style={{cursor:"pointer"}} onClick={() => setIsModalVisible(true)}>
+                <div className="add" style={{cursor:"pointer"}} onClick={() => setIsModalVisible(true)} data-testid="modalBtn">
                     <img src={addProfile} alt="addProfile"/>
                     <span>Crearte new profile</span>
                 </div>

@@ -84,7 +84,7 @@ const UserProfilesList = () => {
     return(
         <>
             {isLoading && (
-                <div style={{width:"100%", height:'100%', position:'fixed',background:'rgba(255,255,255,0.7)',zIndex:55}}>
+                <div style={{width:"100%", height:'100%', position:'fixed',background:'rgba(255,255,255,0.7)',zIndex:55}} data-testid="loader">
                     <Spin/>
                 </div>
             )}
@@ -100,7 +100,7 @@ const UserProfilesList = () => {
                         <img onClick={() => deleteUser(id)} src={deleteImg} alt="deleteImg"/>
                     </div>
                 </div>
-                <h1>Profiles:</h1>
+                <h1 data-testid="colProfile">Profiles:</h1>
                 <Row gutter={24}>
                     {userData.userProfiles?.map(el => {
                         return(

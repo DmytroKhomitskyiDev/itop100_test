@@ -39,7 +39,9 @@ const Header = () => {
                         </ul>
                     )}
                     <ul className={'logout'}>
-                        <li onClick={()=> handleLogOut()}><span style={{cursor:"pointer"}} >Log out</span></li>
+                        <li onClick={()=> handleLogOut()} data-testid="logoutBtn">
+                            <span style={{cursor:"pointer"}} >Log out</span>
+                        </li>
                     </ul>
                 </nav>
             </div>

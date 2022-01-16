@@ -41,16 +41,17 @@ const Login = () => {
                 <Form.Item
                     label="Email"
                     name="email"
+
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
-                    <Input />
+                    <Input data-testid="email"   />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <Input.Password />
+                    <Input.Password data-testid="password"/>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }}>
                     <Button className={'btnLogin'} htmlType="submit">

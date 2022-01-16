@@ -16,7 +16,7 @@ import HomePageRoute from "./components/routes/HomePageRoute";
 function App() {
 
     return (
-        <>
+        <div>
             <Routes>
                 <Route index element={<HomePageRoute><RegistrationUser /></HomePageRoute>} />
                 <Route path="/register" element={<RegistrationUser />}/>
@@ -30,7 +30,7 @@ function App() {
             <div>
                 <ProfileFormModal/>
             </div>
-        </>
+        </div>
 
     )
 }

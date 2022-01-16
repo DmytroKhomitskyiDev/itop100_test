@@ -4,7 +4,7 @@ import userReducer from "./userReducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 import profileReducer from "./profileReducer";
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
     user: userReducer,
     profile: profileReducer
 })

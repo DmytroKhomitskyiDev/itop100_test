@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
+    "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.17.4",
     "axios": "^0.24.0",
+    "babel-jest": "^27.4.6",
+    "enzyme": "^3.11.0",
+    "jest": "^27.4.7",
     "moment": "^2.29.1",
+    "msw": "^0.36.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -16,6 +20,7 @@
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.2"
@@ -23,8 +28,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:ci": "react-scripts test --ci --coverage --reporters=default --reporters=jest-junit",
+    "test": "react-scripts test --env=jsdom --verbose --coverage --forceExit --watchAll --maxWorkers=1 ",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +54,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "react-test-renderer": "^17.0.2"
   }
 }
