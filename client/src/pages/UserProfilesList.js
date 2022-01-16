@@ -17,7 +17,7 @@ const UserProfilesList = () => {
     const {id} = useParams()
 
     const navigate = useNavigate()
-    const [userData,setUserData] = useState([])
+    const [userData,setUserData] = useState({})
     const [isLoading,setIsLoading] = useState(false)
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -81,6 +81,7 @@ const UserProfilesList = () => {
         })
     }
 
+
     return(
         <>
             {isLoading && (
@@ -96,7 +97,7 @@ const UserProfilesList = () => {
                     <p className="userIdInfo">{userData.user?.email}</p>
                     <p className="userIdInfo userStatus">{userData.user?.isadmin ? 'Admin' : 'user'}</p>
                     <div className="userBtnGroup">
-                        <img onClick={showModal} src={edit} alt="edit"/>
+                        <img onClick={showModal} src={edit} alt="edit" data-testid="showModalBtn"/>
                         <img onClick={() => deleteUser(id)} src={deleteImg} alt="deleteImg"/>
                     </div>
                 </div>

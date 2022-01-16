@@ -6,7 +6,7 @@ const DashboardCard = ({name,count}) => {
         <>
             <SDashboard >
                 <div className="cardTop">
-                    <p className="cardTitle">{name}</p>
+                    <p className="cardTitle" data-testid="dashboardName">{name}</p>
                     <p className="cardInfo">{count}</p>
                 </div>
             </SDashboard>

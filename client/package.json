@@ -6,11 +6,13 @@
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "antd": "^4.17.4",
     "axios": "^0.24.0",
     "babel-jest": "^27.4.6",
     "enzyme": "^3.11.0",
     "jest": "^27.4.7",
+    "jest-mock-axios": "^4.5.0",
     "moment": "^2.29.1",
     "msw": "^0.36.4",
     "react": "^17.0.2",
@@ -26,7 +28,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3005 && react-scripts start",
     "build": "react-scripts build",
     "test:ci": "react-scripts test --ci --coverage --reporters=default --reporters=jest-junit",
     "test": "react-scripts test --env=jsdom --verbose --coverage --forceExit --watchAll --maxWorkers=1 ",
