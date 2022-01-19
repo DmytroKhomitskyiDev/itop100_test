@@ -12,7 +12,7 @@ import {setActiveProfile, toggleIsLoader, toggleOpenModalProfile} from "../redux
 import {initialProfileValues} from "../helpers/constants";
 import UserModalForm from "../components/UserModalForm/UserModalForm";
 
-const UserProfilesList = () => {
+const UserProfilesList = ({isLoaderProps = false}) => {
 
     const {id} = useParams()
 
@@ -21,7 +21,7 @@ const UserProfilesList = () => {
     const [isLoading,setIsLoading] = useState(false)
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const isLoader = useSelector(state => state.profile.isLoader)
+    const isLoader = useSelector(state => isLoaderProps || state.profile.isLoader)
 
    const dispatch = useDispatch()
 
@@ -29,7 +29,7 @@ const UserProfilesList = () => {
         setIsLoading(true)
         getUserById(id).then(({data}) => {
             setUserData({user:data.data.user[0],userProfiles:data.data.profilesUser})
-        }).finally(param => {
+        }).catch(e => console.log(e)).finally(param => {
             setIsLoading(false)
         })
     },[])
@@ -40,7 +40,7 @@ const UserProfilesList = () => {
             getUserById(id).then(({data}) => {
                 setUserData({user:data.data.user[0],userProfiles:data.data.profilesUser})
 
-            }).finally(param => {
+            }).catch(e => console.log(e)).finally(param => {
                 dispatch(toggleIsLoader())
                 setIsLoading(false)
             })
@@ -66,10 +66,12 @@ const UserProfilesList = () => {
         setIsModalVisible(true);
     };
 
-    const deleteProfile = async (value) => {
+    const deleteProfile = (value) => {
         dispatch(toggleIsLoader())
-        await deleteProfileRequest(value).finally(param => {
+        deleteProfileRequest(value).then(() => {
             dispatch(toggleIsLoader())
+        }).catch(e => console.log(e)).finally(param => {
+
         })
     }
 
@@ -101,7 +103,7 @@ const UserProfilesList = () => {
                         <img onClick={() => deleteUser(id)} src={deleteImg} alt="deleteImg"/>
                     </div>
                 </div>
-                <h1 data-testid="colProfile">Profiles:</h1>
+                <h1 data-testid="colProfile" data-testid="profilesLabel">Profiles:</h1>
                 <Row gutter={24}>
                     {userData.userProfiles?.map(el => {
                         return(

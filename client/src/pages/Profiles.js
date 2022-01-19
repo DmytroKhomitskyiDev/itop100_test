@@ -22,7 +22,7 @@ const Profiles = () => {
         await getProfilesRequest().then( ({data}) => {
             setProfiles(data)
             setIsLoaderUser(false)
-        })
+        }).catch(e => console.log(e))
     }
 
     useEffect(()=> {

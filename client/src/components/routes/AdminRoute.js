@@ -1,7 +1,8 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const AdminRoute =({ children, ...rest }) => {
+const AdminRoute =({ children }) => {
+    let navigate = useNavigate();
 
     let auth = localStorage.getItem('token');
     let user = JSON.parse(localStorage.getItem('user'));
@@ -10,8 +11,14 @@ const AdminRoute =({ children, ...rest }) => {
         return children
     }
 
-    if(!auth) return <Navigate to="/login" />
+    if(!auth){
+        navigate(`/login`)
+        return null
+    }
+    if(!user.isadmin){
+        navigate(`/profiles`)
+        return null
+    }
 
-    if(!user.isadmin) return <Navigate to="/profiles" />
 }
 export default AdminRoute

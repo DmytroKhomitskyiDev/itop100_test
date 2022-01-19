@@ -63,10 +63,10 @@ const UserModalForm = ({isModalVisible,setIsModalVisible,userData}) => {
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 25 }} className={'groupBtnModal'}>
-                        <Button className={'btnOk'} htmlType="submit" >
+                        <Button className={'btnOk'} htmlType="submit" data-testid={'submitBtn'}>
                             <img src={agreeImg} alt="agree"/>
                         </Button>
-                        <span className={"closeBtn"} onClick={handleCancel}>
+                        <span className={"closeBtn"} onClick={handleCancel} data-testid={'cancelUserModalBtn'}>
                             <img src={cancelImg} alt="agree"/>
                         </span>
                     </Form.Item>

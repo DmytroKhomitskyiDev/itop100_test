@@ -7,7 +7,7 @@ import {Provider, useSelector} from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter as Router} from "react-router-dom";
 ReactDOM.render(
-        <div data-testid="mainDiv">
+        <div >
             <GlobalStyles/>
               <Provider store={store}>
                     <Router>

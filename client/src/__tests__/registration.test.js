@@ -3,6 +3,8 @@ import {render, waitFor} from '@testing-library/react';
 import RegistrationUser from "../pages/RegistrationUser";
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom/extend-expect';
+import axios from "axios";
+import {getDashBoardRequest, registerUserRequest} from "../api/api";
 
 window.matchMedia = window.matchMedia || function() {
     return {
@@ -11,14 +13,23 @@ window.matchMedia = window.matchMedia || function() {
         removeListener: function() {}
     };
 };
+let url = ''
+let body = {}
+jest.mock("axios", () => ({
+    post: jest.fn((_url, _body) => {
+        return new Promise((resolve) => {
+            url = _url
+            body = _body
+            resolve(true)
+        })
+    })
+}))
 
 const mockedNavigator = jest.fn();
 
 jest.mock("react-router-dom", () => ({
     ...(jest.requireActual("react-router-dom")),
-    useNavigate: () => ({
-        navigate: mockedNavigator
-    })
+    useNavigate: () => mockedNavigator
 }));
 
 describe("test registration",() => {
@@ -118,6 +129,10 @@ describe("test registration",() => {
     })
 
     it(" registration user success", async () => {
+        axios.post.mockImplementationOnce(() => Promise.resolve({ data: {success: true} }));
+
+        const catchFn = jest.fn();
+        const thenFn = jest.fn();
         const fakeAnswer = { status: true };
 
         jest.spyOn(global, "fetch").mockImplementation(() =>
@@ -141,6 +156,24 @@ describe("test registration",() => {
             reloadFn(); // as defined above..
             expect(window.location.reload).toHaveBeenCalled();
         })
+
+        await registerUserRequest().then(thenFn).catch(catchFn)
+
+        expect(thenFn).toHaveBeenCalled();
+    })
+
+    it(" registration user success res", async () => {
+        axios.post.mockImplementationOnce(() => Promise.resolve({ data: {success: true} }));
+
+        const catchFn = jest.fn();
+        const thenFn = jest.fn();
+
+
+        render(<RegistrationUser />);
+
+        await registerUserRequest().then(thenFn).catch(catchFn)
+
+        expect(thenFn).toHaveBeenCalled();
     })
 })
 

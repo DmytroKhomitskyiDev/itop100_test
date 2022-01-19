@@ -11,17 +11,15 @@ import {SModal} from "../../styles/commonStyles";
 import agreeImg from "../../image/icons/agree.svg"
 import cancelImg from "../../image/icons/cansel.svg"
 
-const ProfileFormModal = () => {
+const ProfileFormModal = ({isModalVisibleDefault = false}) => {
 
-    const isModalVisible = useSelector(state => state.profile.isModalVisible)
+    const isModalVisible = useSelector(state => isModalVisibleDefault || state.profile.isModalVisible)
     const activeProfile = useSelector(state => state.profile.activeProfile)
     const isLoader = useSelector(state => state.profile.isLoader)
-
 
     const dispatch = useDispatch()
     const [form] = Form.useForm()
     const onFinish = (values) => {
-
         values.birthdate = moment(new Date(values.birthdate)).format("DD.MM.YYYY")
         if(activeProfile.id) {
             editProfileRequest(values,activeProfile.id).then(({data}) => {
@@ -78,12 +76,12 @@ const ProfileFormModal = () => {
                     name="name"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
-                    <Input />
+                    <Input data-testid='nameProfileModal'/>
                 </Form.Item>
                 <Form.Item
                     label="gender:"
                     name="gender"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    rules={[{ required: true, message: 'Please choose gender!' }]}
                 >
                     <Radio.Group >
                         <Radio value={"male"}>male</Radio>
@@ -100,15 +98,15 @@ const ProfileFormModal = () => {
                 <Form.Item
                     label="city:"
                     name="city"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    rules={[{ required: true, message: 'Please input your city!' }]}
                 >
                     <Input/>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }} className={'groupBtnModal'}>
-                    <Button className={'btnOk'} htmlType="submit" loading={isLoader} data-testid="closeButton">
+                    <Button className={'btnOk'} htmlType="submit" loading={isLoader} data-testid="submitBtn">
                         <img src={agreeImg} alt="agree"/>
                     </Button>
-                    <span className={"closeBtn"} onClick={handleCancel}>
+                    <span className={"closeBtn"} onClick={handleCancel} data-testid="handleCancelBtn">
                         <img src={cancelImg} alt="agree"/>
                     </span>
                 </Form.Item>

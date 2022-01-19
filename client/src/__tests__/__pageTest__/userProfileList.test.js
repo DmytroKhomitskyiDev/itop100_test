@@ -4,9 +4,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {MemoryRouter} from "react-router-dom";
 import UserProfilesList from "../../pages/UserProfilesList";
 import axios from "axios";
-import {baseUrl, getUserById} from "../../api/api";
+import {baseUrl, deleteUserRequest, getDashBoardRequest, getUserById} from "../../api/api";
 import * as reactRedux from 'react-redux'
-import {fireEvent} from "@testing-library/react";
+import {act, fireEvent, waitFor} from "@testing-library/react";
 
 window.matchMedia = window.matchMedia || function() {
     return {
@@ -18,6 +18,24 @@ window.matchMedia = window.matchMedia || function() {
 const mockedFn = jest.fn();
 
 
+let url = ''
+let body = {}
+jest.mock("axios", () => ({
+    get: jest.fn((_url, _body) => {
+        return new Promise((resolve) => {
+            url = _url
+            body = _body
+            resolve(true)
+        })
+    }),
+    delete: jest.fn((_url, _body) => {
+        return new Promise((resolve) => {
+            url = _url
+            body = _body
+            resolve(true)
+        })
+    })
+}))
 
 jest.mock("react-router-dom", () => ({
     ...(jest.requireActual("react-router-dom")),
@@ -26,21 +44,45 @@ jest.mock("react-router-dom", () => ({
     })
 }));
 
-it('test user Profile list page ', async () =>  {
-    const mockedFnDispatch = jest.fn();
-    jest.mock("react-redux", () => ({
-        ...(jest.requireActual("react-redux")),
-        useDispatch: () => ({
-            dispatch: mockedFnDispatch
-        })
-    }));
-    const mock = jest.fn();
-    const {getByTestId} = render(<MemoryRouter><UserProfilesList /></MemoryRouter>);
+describe('user profile list', () => {
+    it('test user Profile list page ', async () =>  {
+        axios.get.mockImplementationOnce(() => Promise.resolve({ data: true }));
 
-    fireEvent.click(getByTestId("modalBtn"))
-    expect(mock).toHaveBeenCalledTimes(0);
-    fireEvent.click(getByTestId("showModalBtn"))
-    expect(mock).toHaveBeenCalledTimes(0);
+        const catchFn = jest.fn();
+        const thenFn = jest.fn();
+        const thenDeleteFn = jest.fn();
+        const finallyFn = jest.fn()
+        const mockedFnDispatch = jest.fn();
+        jest.mock("react-redux", () => ({
+            ...(jest.requireActual("react-redux")),
+            useDispatch: () => ({
+                dispatch: mockedFnDispatch
+            })
+        }));
+        const mock = jest.fn();
+        const {getByTestId} = render(<MemoryRouter><UserProfilesList isLoaderProps={true}/></MemoryRouter>);
 
-    expect(true).toEqual(true);
-});
+        await getUserById().then(() => {thenFn()}).catch(catchFn).finally(() => {finallyFn()})
+
+        expect(thenFn).toHaveBeenCalled();
+        //
+        // expect(finallyFn).toHaveBeenCalled();
+
+        fireEvent.click(getByTestId("modalBtn"))
+        expect(mock).toHaveBeenCalledTimes(0);
+        fireEvent.click(getByTestId("showModalBtn"))
+        expect(mock).toHaveBeenCalledTimes(0);
+
+        // fireEvent.click(getByTestId("deleteButton"))
+        //
+        await deleteUserRequest().then(() => {thenDeleteFn()}).catch(catchFn).finally(() => {finallyFn()})
+
+        expect(thenDeleteFn).toHaveBeenCalled();
+        expect(mock).toHaveBeenCalledTimes(0);
+
+        expect(true).toEqual(true);
+    });
+
+
+
+})

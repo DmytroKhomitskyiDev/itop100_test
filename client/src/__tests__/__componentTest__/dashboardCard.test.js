@@ -5,6 +5,6 @@ import DashboardCard from "../../components/DashboardCard/DashboardCard";
 
 
 it('test AddCardProfile ',  () =>  {
-    render(<DashboardCard />);
+    render(<DashboardCard name="test" />);
     expect(true).toEqual(true);
 });

@@ -1,14 +1,20 @@
 import React from "react";
-import {render} from '@testing-library/react';
+import {render} from '../test-utils';
 import '@testing-library/jest-dom/extend-expect';
 import Dashboard from "../../pages/Dashboard";
 import mockAxios from "jest-mock-axios";
 import {baseUrl, getDashBoardRequest} from "../../api/api";
 import axios from "axios";
+import {MemoryRouter} from "react-router-dom";
+import {waitFor} from "@testing-library/react";
 
-afterEach(() => {
-    mockAxios.reset();
-});
+window.matchMedia = window.matchMedia || function() {
+    return {
+        matches: false,
+        addListener: function() {},
+        removeListener: function() {}
+    };
+};
 let url = ''
 let body = {}
 jest.mock("axios", () => ({
@@ -20,6 +26,19 @@ jest.mock("axios", () => ({
         })
     })
 }))
+const mockedFn = jest.fn();
+jest.mock("react-router-dom", () => ({
+    ...(jest.requireActual("react-router-dom")),
+    useNavigate: () => ({
+        navigate: mockedFn
+    })
+}));
+jest.mock("react-redux", () => ({
+    ...(jest.requireActual("react-redux")),
+    useDispatch: () => ({
+        dispatch: mockedFn
+    })
+}));
 
 it('test Dashboard page ', async () =>  {
     axios.get.mockImplementationOnce(() => Promise.resolve({ data: true }));
@@ -27,13 +46,17 @@ it('test Dashboard page ', async () =>  {
     const catchFn = jest.fn();
     const thenFn = jest.fn();
 
-
-    render(
-        <Dashboard />
+    const {getByTestId} = render(
+        <MemoryRouter>
+            <Dashboard dashboardDefault={[]}/>
+        </MemoryRouter>
     );
 
     await getDashBoardRequest().then(thenFn).catch(catchFn)
 
     expect(thenFn).toHaveBeenCalled();
+
+
     expect(true).toEqual(true);
 });
+
