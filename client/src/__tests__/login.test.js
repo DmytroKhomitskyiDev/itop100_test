@@ -1,9 +1,11 @@
 import React from "react";
-import {findAllByRole, render, waitFor} from '@testing-library/react';
+import {findAllByRole, render, waitFor,screen} from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom/extend-expect';
 import Login from "../pages/Login";
 import axios from "axios";
+import App from "../App";
+import {MemoryRouter} from "react-router-dom";
 
 window.matchMedia = window.matchMedia || function() {
     return {
@@ -12,7 +14,10 @@ window.matchMedia = window.matchMedia || function() {
         removeListener: function() {}
     };
 };
-
+beforeAll(() => {
+    window.localStorage.setItem('token', JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTY0MjQyNzg1Mn0.T9bvkSg7q6OA1Y5zY2oWh68w5du1L9lKg0iojdK95HM'));
+    window.localStorage.setItem('user', JSON.stringify({"id":21,"username":"denus","email":"test1@mail.ua","isadmin":false}));
+});
 const mockedFn = jest.fn();
 
 jest.mock("react-router-dom", () => ({
@@ -28,6 +33,34 @@ jest.mock("react-redux", () => ({
         dispatch: mockedFn
     })
 }));
+
+const localStorageMock = (function () {
+    let store = {};
+
+    return {
+        getItem(key) {
+            return store[key];
+        },
+
+        setItem(key, value) {
+            store[key] = value;
+        },
+
+        clear() {
+            store = {};
+        },
+
+        removeItem(key) {
+            delete store[key];
+        },
+
+        getAll() {
+            console.log(store);
+        },
+    };
+})();
+
+Object.defineProperty(window, "localStorage", { value: localStorageMock });
 
 describe("test login user",() => {
     const reloadFn = () => {
@@ -163,7 +196,6 @@ describe("test login user",() => {
             expect(data).toBeInstanceOf(Object);
         })
     })
-
 
 
 })

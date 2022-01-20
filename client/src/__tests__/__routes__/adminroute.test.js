@@ -18,7 +18,7 @@ it('test AdminRoute ',  () =>  {
         navigate: jest.fn().mockImplementation(() => ({})),
     }),
     render(
-         <AdminRoute  />
+        <AdminRoute>test</AdminRoute>
     );
     expect(true).toEqual(true);
 });

@@ -3,6 +3,7 @@ import Header from "../components/Header/Header";
 import { Row, Spin} from "antd";
 import {getDashBoardRequest} from "../api/api";
 import DashboardCard from "../components/DashboardCard/DashboardCard";
+import {getCurrentTitle} from "../helpers/utils";
 
 const Dashboard = ({ dashboardDefault = [] }) => {
     const [dashboard,setDashboard] = useState(dashboardDefault)
@@ -14,18 +15,7 @@ const Dashboard = ({ dashboardDefault = [] }) => {
 
     if(!dashboard) return <Spin/>
 
-    const getCurrentTitle = (name) => {
-        switch (name) {
-            case "users":
-                return "Users: "
-            case "profiles":
-                return "Profiles: "
-            case "adult":
-                return "Profiles over 18 years old: "
-            default:
-                return ''
-        }
-    }
+
     return(
         <>
             <Header/>

@@ -82,6 +82,7 @@ const ProfileFormModal = ({isModalVisibleDefault = false}) => {
                     label="gender:"
                     name="gender"
                     rules={[{ required: true, message: 'Please choose gender!' }]}
+                    data-testid='radioProfileModal'
                 >
                     <Radio.Group >
                         <Radio value={"male"}>male</Radio>
@@ -93,14 +94,14 @@ const ProfileFormModal = ({isModalVisibleDefault = false}) => {
                     name="birthdate"
                     rules={[{ required: true, message: 'Please input date' }]}
                 >
-                    <DatePicker locale={locale} format={'DD.MM.YYYY'}/>
+                    <DatePicker locale={locale} format={'DD.MM.YYYY'} data-testid='birthdate'/>
                 </Form.Item>
                 <Form.Item
                     label="city:"
                     name="city"
                     rules={[{ required: true, message: 'Please input your city!' }]}
                 >
-                    <Input/>
+                    <Input data-testid='cityProfileModal'/>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 25 }} className={'groupBtnModal'}>
                     <Button className={'btnOk'} htmlType="submit" loading={isLoader} data-testid="submitBtn">

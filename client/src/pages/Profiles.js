@@ -41,7 +41,6 @@ const Profiles = () => {
              dispatch(toggleIsLoader())
          })
     }
-
     const editProfile = (values) => {
         dispatch(setActiveProfile(values))
         dispatch(toggleOpenModalProfile())

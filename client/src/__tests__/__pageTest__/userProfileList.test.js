@@ -7,6 +7,7 @@ import axios from "axios";
 import {baseUrl, deleteUserRequest, getDashBoardRequest, getUserById} from "../../api/api";
 import * as reactRedux from 'react-redux'
 import {act, fireEvent, waitFor} from "@testing-library/react";
+import ProfileFormModal from "../../components/ProfileFormModal/ProfileFormModal";
 
 window.matchMedia = window.matchMedia || function() {
     return {
@@ -43,7 +44,11 @@ jest.mock("react-router-dom", () => ({
         navigate: mockedFn
     })
 }));
-
+let container;
+beforeEach(() => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+});
 describe('user profile list', () => {
     it('test user Profile list page ', async () =>  {
         axios.get.mockImplementationOnce(() => Promise.resolve({ data: true }));

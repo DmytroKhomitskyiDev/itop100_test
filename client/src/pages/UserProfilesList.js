@@ -103,7 +103,7 @@ const UserProfilesList = ({isLoaderProps = false}) => {
                         <img onClick={() => deleteUser(id)} src={deleteImg} alt="deleteImg"/>
                     </div>
                 </div>
-                <h1 data-testid="colProfile" data-testid="profilesLabel">Profiles:</h1>
+                <h1 data-testid="colProfile" >Profiles:</h1>
                 <Row gutter={24}>
                     {userData.userProfiles?.map(el => {
                         return(

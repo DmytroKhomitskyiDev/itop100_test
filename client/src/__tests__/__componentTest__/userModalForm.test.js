@@ -19,6 +19,11 @@ window.matchMedia = window.matchMedia || function() {
 };
 let url = ''
 let body = {}
+let container;
+beforeEach(() => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+});
 jest.mock("axios", () => ({
     post: jest.fn((_url, _body) => {
         return new Promise((resolve) => {
@@ -46,16 +51,28 @@ describe('test user modal', () => {
 
         await editUserRequest().then(() => {thenFn()}).catch(catchFn)
         expect(thenFn).toHaveBeenCalled();
-
-        // userEvent.click(getByTestId("cancelUserModalBtn"));
         expect(mock).toHaveBeenCalled();
 
+    });
+    it('handleCancel test show profiles ', async () =>  {
 
-        // // userEvent.click(getByTestId("submitBtn"));
-        //
-        // userEvent.click(getByTestId("cancelUserModalBtn"));
-        //
-        // // expect(container).toMatchSnapshot();
+        const fakeResponse = [];
+
+        jest.spyOn(window, "fetch").mockImplementation(() => {
+            const fetchResponse = {
+                json: () => Promise.resolve(fakeResponse)
+            };
+            return Promise.resolve(fetchResponse);
+        });
+
+        await act(async () => {
+            render(<ProfileFormModal />, container);
+        });
+
+        expect(container.textContent).toBe("");
+
+        window.fetch.mockRestore();
+
     });
 
 })

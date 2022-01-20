@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from '../test-utils';
 import '@testing-library/jest-dom/extend-expect';
-import Dashboard from "../../pages/Dashboard";
+import Dashboard, {getCurrentTitle} from "../../pages/Dashboard";
 import mockAxios from "jest-mock-axios";
 import {baseUrl, getDashBoardRequest} from "../../api/api";
 import axios from "axios";
@@ -40,23 +40,24 @@ jest.mock("react-redux", () => ({
     })
 }));
 
-it('test Dashboard page ', async () =>  {
-    axios.get.mockImplementationOnce(() => Promise.resolve({ data: true }));
+describe('test dashboard' , () => {
+    it('test Dashboard page ', async () =>  {
+        axios.get.mockImplementationOnce(() => Promise.resolve({ data: true }));
 
-    const catchFn = jest.fn();
-    const thenFn = jest.fn();
+        const catchFn = jest.fn();
+        const thenFn = jest.fn();
 
-    const {getByTestId} = render(
-        <MemoryRouter>
-            <Dashboard dashboardDefault={[]}/>
-        </MemoryRouter>
-    );
+        const {getByTestId} = render(
+            <MemoryRouter>
+                <Dashboard dashboardDefault={[]} getCurrentTitle={getCurrentTitle}/>
+            </MemoryRouter>
+        );
+        await getDashBoardRequest().then(thenFn).catch(catchFn)
 
-    await getDashBoardRequest().then(thenFn).catch(catchFn)
+        expect(thenFn).toHaveBeenCalled();
+        expect(true).toEqual(true);
+    });
 
-    expect(thenFn).toHaveBeenCalled();
 
-
-    expect(true).toEqual(true);
-});
+})
 

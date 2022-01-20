@@ -5,6 +5,8 @@ import Profiles from "../../pages/Profiles";
 import {MemoryRouter} from "react-router-dom";
 import axios from "axios";
 import {deleteProfileRequest, getProfilesRequest} from "../../api/api";
+import {act} from "@testing-library/react";
+import ProfileFormModal from "../../components/ProfileFormModal/ProfileFormModal";
 
 window.matchMedia = window.matchMedia || function() {
     return {
@@ -75,4 +77,23 @@ it('delete Profiles  ', async () =>  {
         </MemoryRouter>
     );
     expect(true).toEqual(true);
+});
+it('handleCancel test', async () =>  {
+    const fakeResponse = [];
+
+    jest.spyOn(window, "fetch").mockImplementation(() => {
+        const fetchResponse = {
+            json: () => Promise.resolve(fakeResponse)
+        };
+        return Promise.resolve(fetchResponse);
+    });
+
+    await act(async () => {
+        render(<ProfileFormModal />, container);
+    });
+
+    expect(container.textContent).toBe("");
+
+    window.fetch.mockRestore();
+
 });
